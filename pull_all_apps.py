@@ -11,9 +11,9 @@ def git_pull_all(dir_path):
                 print(f'Pulling repository: {item_path}')
                 subprocess.run(['git', '-C', item_path, 'pull'])
                 print('Pull complete.\n')
-    else:
+    else :
                 print("Pull Faild")
 # Specify the directory path where you want to perform git pull
-directory_path = os.getcwd()
+directory_path = '/home/falah/Documents/my-github/'
 
 git_pull_all(directory_path)
