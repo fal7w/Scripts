@@ -14,6 +14,8 @@ def git_pull_all(dir_path):
         else :
                 print("Pull Faild")
 # Specify the directory path where you want to perform git pull
+# current_directory = os.path.dirname(os.path.abspath(__file__))
+# script_path = os.path.join(current_directory, 'your_script.py')
 directory_path = '/home/falah/Documents/my-github/'
 
 git_pull_all(directory_path)
