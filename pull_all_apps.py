@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 def git_current_path():
-    subprocess.run(['pwd'])
+    subprocess.run(['pwd', 'cd/..'])
 git_current_path()
 
 
@@ -15,7 +15,7 @@ def get_user_path():
         user_path = sys.argv[1]
         return user_path
 
-# Usage example
+
 path = get_user_path()
 if path:
     # dir_path = '/home/falah/Documents/my-github/';
