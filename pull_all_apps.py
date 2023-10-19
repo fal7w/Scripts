@@ -15,7 +15,6 @@ def get_user_path():
         user_path = sys.argv[1]
         return user_path
 
-
 path = get_user_path()
 if path:
     # dir_path = '/home/falah/Documents/my-github/';
