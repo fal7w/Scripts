@@ -2,8 +2,8 @@ import subprocess
 import os
 
 # # Update and upgrade system
-# subprocess.check_call(['sudo', 'apt-get', 'update'])
-# subprocess.check_call(['sudo', 'apt-get', 'upgrade'])
+subprocess.check_call(['sudo', 'apt-get', 'update'])
+subprocess.check_call(['sudo', 'apt-get', 'upgrade'])
 # Install required packages
 subprocess.run(["sudo", "apt", "install", "git", "python3-dev", "python3-pip", "redis-server"])
 subprocess.run(["sudo", "apt", "install", "software-properties-common"])
