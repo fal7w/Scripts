@@ -9,18 +9,9 @@ subprocess.run(["sudo", "apt", "install", "git", "python3-dev", "python3-pip", "
 subprocess.run(["sudo", "apt", "install", "software-properties-common"])
 subprocess.run(["sudo", "apt-get", "install", "mariadb-server"])
 print('Install required packages complete ..')
+
+
 # Change MariaDB root password
-# mysql_commands = """
-# DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
-# ALTER USER 'root'@'localhost' IDENTIFIED BY "root";
-# DROP USER IF EXISTS ''@'localhost';
-# DROP USER IF EXISTS ''@'$(hostname)';
-# DROP DATABASE IF EXISTS \`test\` ;
-# FLUSH PRIVILEGES;
-# """
-# print("")
-# subprocess.run(["sudo", "mysql"], 'input=mysql_commands.encode(), text=True')
-# print('Change MariaDB root password Complete..')
 mysql_commands = """
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
 ALTER USER 'root'@'localhost' IDENTIFIED BY "root";
@@ -54,7 +45,6 @@ subprocess.run(["sudo", "systemctl", "restart", "mariadb"])
 print(' Configure MariaDB Complete..')
 
 # Install nvm
-
 install_nvm_command = 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash'
 try:
     subprocess.run(install_nvm_command, shell=True, executable="/bin/bash", check=True)
@@ -72,7 +62,7 @@ except subprocess.CalledProcessError as e:
     print("Failed to get available Node.js versions:", e)
 
 # Install a different version of Node.js
-node_version = "14.0"  # Replace with the desired Node.js version
+node_version = "16.0"  # Replace with the desired Node.js version
 install_node_command = f'source ~/.nvm/nvm.sh && nvm install {node_version}'
 try:
     subprocess.run(install_node_command, shell=True, executable="/bin/bash", check=True)
@@ -106,17 +96,6 @@ subprocess.run(["sudo", "apt-get", "install", "xvfb", "libfontconfig", "wkhtmlto
 print('Install wkhtmltopdf Complete..')
 
 # Install frappe-bench
-# subprocess.run(["pip3", "install", "frappe-bench"])
-# subprocess.run(["echo", 'export PATH="$HOME/.local/bin:$PATH"', ">>", "~/.bashrc"])
-# subprocess.run(["source", "~/.bashrc"])
-# print('Install frappe-bench Complete..')
-
-
-# subprocess.run(["pip3", "install", "frappe-bench"])
-# subprocess.run(["echo", 'export PATH="$HOME/.local/bin:$PATH"', ">>", "~/.bashrc"])
-# subprocess.run(['bash', '-c', 'source ~/.profile'])
-# print('Install frappe-bench Complete..')
-
 install_command = 'pip3 install frappe-bench'
 try:
     subprocess.run(install_command, shell=True, check=True)
