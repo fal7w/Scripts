@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 def git_current_path():
-    subprocess.run(['pwd', 'cd/..'])
+    subprocess.run(['pwd'])
 git_current_path()
 
 
