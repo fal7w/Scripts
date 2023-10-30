@@ -1,4 +1,4 @@
-name: New Issue Notification
+name: New Issue Notification_v0
 
 on:
   issues:
