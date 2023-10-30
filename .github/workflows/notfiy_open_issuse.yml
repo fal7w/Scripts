@@ -1,0 +1,21 @@
+name: New Issue Notification
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  send_notification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Send Discord notification
+        uses: appleboy/discord-action@v0.1.0
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          message: 'A new issue has been opened in the repository: ${{ github.repository }}'
