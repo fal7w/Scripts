@@ -20,8 +20,8 @@ jobs:
             -d '{
               "title": "New Pull Request",
               "body": "This pull request is automatically created when the issue is closed.",
-              "head": "selected-branch",
+              "head": "git-act",
               "base": "main"
             }' \
-            "https://api.github.com/repos/${{ github.repository }}/pulls"
+         
             
