@@ -1,0 +1,26 @@
+name: Create Pull Request on Issue Close
+
+on:
+  issues:
+    types:
+      - closed
+
+jobs:
+  create_pull_request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.event.issue.number }}-pull-request
+          title: New Pull Request
+          body: |
+            This pull request is automatically created when the issue is closed.
+            Issue: ${{ github.event.issue.html_url }}
+          base: main
+          head: ${{ github.event.issue.number }}-branch
