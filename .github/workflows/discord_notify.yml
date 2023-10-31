@@ -14,4 +14,4 @@ jobs:
         uses: sebastianpopp/discord-action@releases/v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: ${{ github.issues }} has been successfullly deployed.
+          message: ${{ github.repository }} has been open an issues.
