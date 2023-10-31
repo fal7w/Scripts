@@ -23,4 +23,4 @@ jobs:
             This pull request is automatically created when the issue is closed.
             Issue: ${{ github.event.issue.html_url }}
           base: main
-          # head: ${{ github.event.issue.number }}-branch
+          head: ${{ github.event.issue.number }}-branch
