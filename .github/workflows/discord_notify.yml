@@ -14,5 +14,8 @@ jobs:
         uses: sebastianpopp/discord-action@releases/v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: ${{ github.repository }} has been open an issues.
-          user_id: ${{ secrets.DISCORD_USER_ID }}
+          message: |
+            Hello! A new issue has been opened in the repository.
+            Issue Title: ${{ github.event.issue.title }}
+            Issue URL: ${{ github.event.issue.html_url }}
+         
