@@ -16,5 +16,5 @@ async def send_dm(token, response_persons):
 
 
 tocken =sys.argv[1]
-response_persons = json.load(sys.argv[2])
+response_persons = json.load(sys.argv[1])
 discord.run(send_dm(token, response_persons))   
