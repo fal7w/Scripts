@@ -1,4 +1,4 @@
-name: Send email notification
+name: discord_notify
 
 on:
   issues:
