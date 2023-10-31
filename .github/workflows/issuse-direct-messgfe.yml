@@ -17,4 +17,6 @@ jobs:
       run: python -m pip install -r requirements.txt
 
     - name: Send Discord notification
+      env:
+          RESPONSE_PERSONS: ${{ secrets.RESPONSE_PERSONS }}
       run: python send_discord_dm.py ${{ secrets.DISCORD_BOT_TOKEN }} ${{ secrets.RESPONSE_PERSONS }}
