@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Send Discord DM
-        uses: appleboy/discord-action@master
+        uses: sebastianpopp/discord-action@releases/v2
         with:
           discord_token: ${{ secrets.DISCORD_BOT_TOKEN }}
           to: ${{ secrets.DISCORD_USER_ID }}
