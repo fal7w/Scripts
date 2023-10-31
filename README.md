@@ -10,9 +10,12 @@ a lot of command to git pull from each repo, now just typing one command and its
 and every part of this script is sample code which shows how to do the 
 following :
 
+gggggg
 * Creat function to take current path in directory
 * Creat function to take path that you type in commandline
 * Creat function to pull all repostries
 * Creat if condition to check if the user type th path of directory, if not then tacke his cuurrent path by typing ' . '
   
 >>>>>>> origin/main
+
+,,,,

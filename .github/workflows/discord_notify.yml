@@ -1,0 +1,17 @@
+name: Send email notification
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  send_notification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: discord
+        uses: sebastianpopp/discord-action@releases/v2
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: ${{ github.repository }} has been open an issues.
