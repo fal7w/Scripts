@@ -20,6 +20,6 @@ jobs:
 
       - name: Create Pull Request
         run: |
-          gh pr create --title "New Pull Request" --body "This pull request is automatically created when the issue is closed." --base main --head "selected-branch"
+          gh pr create --title "New Pull Request" --body "This pull request is automatically created when the issue is closed." --base main --head "git-act"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
