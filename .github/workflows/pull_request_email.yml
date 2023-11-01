@@ -9,10 +9,11 @@ jobs:
   notify:
     runs-on: ubuntu-latest
 
-  steps:
+ 
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
+  
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
         with:
