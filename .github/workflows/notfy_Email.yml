@@ -21,7 +21,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'New Issue Opened'
-          message: |
+          body: |
             Hello! A new issue has been opened in the repository.
             Issue Title: ${{ github.event.issue.title }}
             Issue URL: ${{ github.event.issue.html_url }}
