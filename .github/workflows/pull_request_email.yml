@@ -1,0 +1,29 @@
+name: name: Pull_Request_Email
+
+on:
+  pull_request:
+    type:
+      - opened
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+  steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: mail.fintechsys.net
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: 'New Issue Opened'
+          body: |
+            Hello! A new pull_request has been opened in the repository.
+            pull_request Title: ${{ github.event.pull_request.title }}
+            pull_request URL: ${{ github.event.pull_request.html_url }}
+          to: ${{ secrets.USERS_EMAILS }}
+          from: github-actions@gmail.com
