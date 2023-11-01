@@ -13,6 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: set emails
+        id: emails
+        run: echo"emails=f.alfalahi@fintechsys.net, m.nozili@fintechsys.net" >> $GITHUB_ENV
+
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
         with:
@@ -22,5 +26,5 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'New Issue Opened'
           body: 'A new issue has been opened in the repository: ${{ github.repository }}'
-          to: f.alfalahi@fintechsys.net
+          to: ${{ steps.emails.outputs.emails }}
           from: github-actions@gmail.com
