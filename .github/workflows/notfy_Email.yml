@@ -16,11 +16,11 @@ jobs:
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.gmail.com
-          server_port: 587
+          server_address: mail.fintechsys.net
+          server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'New Issue Opened'
           body: 'A new issue has been opened in the repository: ${{ github.repository }}'
-          to: falahmohammeda@gmail.com
-          from: github-actions@example.com
+          to: f.alfalahi@fintechsys.net
+          from: github-actions@gmail.com
