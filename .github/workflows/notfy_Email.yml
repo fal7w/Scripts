@@ -22,5 +22,5 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'New Issue Opened'
           body: 'A new issue has been opened in the repository: ${{ github.repository }}'
-          to: f.alfalahi@fintechsys.net
+          to: ${{ Variables.USERS_EMAIL }}
           from: github-actions@gmail.com
