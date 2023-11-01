@@ -25,5 +25,5 @@ jobs:
             Hello! A new issue has been opened in the repository.
             Issue Title: ${{ github.event.issue.title }}
             Issue URL: ${{ github.event.issue.html_url }}
-          to: f.alfalahi@fintechsys.net
+          to: ${{ secrets.USERS_EMAILS }}
           from: github-actions@gmail.com
