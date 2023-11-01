@@ -4,7 +4,6 @@ on:
   pull_request:
     types:
       - opened
-      - synchronize
 
 jobs:
   send_notification:
@@ -15,4 +14,7 @@ jobs:
         uses: sebastianpopp/discord-action@releases/v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: 'A new pull request has been opened or updated in the repository: ${{ github.repository }}'
+          message: |
+            Hello! A new pull request has been opened in the repository.
+             pull_request Title: ${{ github.event. pull_request.title }}
+              pull_request URL: ${{ github.event. pull_request.html_url }}
