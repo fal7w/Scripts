@@ -13,6 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Read HTML file
+        id: read_html
+        run: |
+          curl -o message.html -L "https://github.com/fal7w/Scripts/blob/main/messge.html"  # Replace <URL> with the actual URL of the HTML file
+
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
         with:
@@ -21,9 +26,6 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'New Issue Opened'
-          body: |
-            Hello! A new issue has been opened in the repository.
-            Issue Title: ${{ github.event.issue.title }}
-            Issue URL: ${{ github.event.issue.html_url }}
+          body: ${{ steps.read_html.outputs.stdout }}
           to: ${{ secrets.USERS_EMAILS }}
           from: github-actions@gmail.com
