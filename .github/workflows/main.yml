@@ -17,7 +17,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: fal7w-patch-1
+          branch: 45-ggg
           base: main
           title: Automatic PR - ${{ github.event.issue.title }}
           body: |
