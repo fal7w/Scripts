@@ -1,4 +1,4 @@
-name: Auto-generate Pull Request
+name: Create Pull Request on Issue Close
 
 on:
   issues:
@@ -10,28 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
       - name: Create Pull Request
-        env:
-          OWNER: fal7w
-          REPO: Scripts
-          BRANCH: git-act
-          TITLE: Automatically generated pull request
-          BODY: This pull request has been automatically generated on issue close.
-          LABELS: auto-generated
-          ASSIGNEES: fal7w
-          BASE: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          npm install axios
-          node create-pull-request.js
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: fal7w-patch-1
+          base: main
+          title: Automatic PR - ${{ github.event.issue.title }}
+          body: |
+            Automatic pull request created when issue was closed.
+            Issue: ${{ github.event.issue.html_url }}
