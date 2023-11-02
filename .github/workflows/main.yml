@@ -1,35 +1,37 @@
-name: Create Pull Request on Issue Close
+name: Auto-generate Pull Request
+
 on:
   issues:
     types:
       - closed
 
 jobs:
-  create_pull_request:
+  create-pull-request:
     runs-on: ubuntu-latest
-    steps:
-      - name: Check if issue has a selected branch
-        id: check_branch
-        run: |
-          branch_name=$(jq -r '.issue.pull_request.base.ref' "$GITHUB_EVENT_PATH")
-          if [[ -z "$branch_name" ]]; then
-            echo "No selected branch found for the issue."
-            exit 0
-          fi
-          echo "::set-output name=branch::${branch_name}"
 
-      - name: Create branch from selected branch
+    steps:
+      - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          ref: ${{ steps.check_branch.outputs.branch }}
-          path: new-branch
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          branch: new-branch
-          title: "Auto-generated Pull Request"
-          body: |
-            This pull request is automatically created when the corresponding issue is closed.
-            Issue: ${{ github.event.issue.html_url }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          OWNER: fal7w
+          REPO: Scripts
+          BRANCH: git-act
+          TITLE: Automatically generated pull request
+          BODY: This pull request has been automatically generated on issue close.
+          LABELS: auto-generated
+          ASSIGNEES: fal7w
+          BASE: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm install axios
+          node create-pull-request.js
