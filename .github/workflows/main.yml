@@ -1,4 +1,4 @@
-name: Create Pull Request on Issue Close
+name: Create_Pull_Request_on _Issue_Close_test
 
 on:
   issues:
