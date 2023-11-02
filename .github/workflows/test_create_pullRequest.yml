@@ -15,7 +15,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets._GITHUB_TOKEN }}
           branch: pull-request-branch
           title: Automatically generated pull request
           body: This pull request has been automatically generated on issue close.
