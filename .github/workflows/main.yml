@@ -16,6 +16,6 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets._GITHUB_TOKEN }}
-          branch: 45-ggg
+          branch: 'main'
           title: 'New Pull Request - ${{ github.event.issue.title }}'
           body: 'This pull request was automatically created when the issue was closed.'
