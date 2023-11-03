@@ -1,0 +1,26 @@
+name: Project Item State Notification
+
+on:
+  project_card:
+    types:
+      - converted
+      - moved_column
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check card state
+        uses: actions/github-script@v6
+        id: check_card
+        with:
+          script: |
+            const state = github.event.project_card.column_name;
+            console.log('Card state:', state);
+            return state;
+
+      - name: Send notification
+        if: ${{ steps.check_card.outputs.result == 'Done' }}
+        run: |
+          # Add your notification logic here
+          echo "Sending notification..."
