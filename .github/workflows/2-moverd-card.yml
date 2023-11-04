@@ -1,0 +1,31 @@
+name: Project Card Moved Notification
+
+on:
+  project_card:
+    types: [moved]
+
+jobs:
+  send_notification:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Send Notification
+      env:
+        PROJECT_NAME: ${{ github.event.project_card.project_name }}
+        NEW_LOCATION: ${{ github.event.project_card.column_name }}
+        RECIPIENT_EMAIL: f.alfalahi@fintech.net
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "Subject: Project Card Relocation Notification" > notification.txt
+        echo "Dear Team," >> notification.txt
+        echo "" >> notification.txt
+        echo "We would like to inform you that the project card for ${PROJECT_NAME} has been moved to the ${NEW_LOCATION} column." >> notification.txt
+        echo "" >> notification.txt
+        echo "Please make a note of this change and update your workflows accordingly." >> notification.txt
+        echo "" >> notification.txt
+        echo "Thank you!" >> notification.txt
+        echo "Your Organization" >> notification.txt
+        cat notification.txt | sendmail -f github-actions@gmail.com -t $RECIPIENT_EMAIL
