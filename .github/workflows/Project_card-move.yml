@@ -1,0 +1,16 @@
+name: Notify assignees when their card moves between columns
+
+on:
+  project_card:
+      types: [moved]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+     - uses: jenschelkopf/project-card-moved-notification@1.0
+       id: check_card
+       if: ${{ steps.check_card.outputs.result == 'Done' }}
+     - name: Send notification
+       run: |
+           echo "Sending notification..."
