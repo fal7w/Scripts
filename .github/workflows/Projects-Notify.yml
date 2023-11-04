@@ -1,10 +1,8 @@
 name: Project Item State Notification
 
 on:
-  project_card:
-    types:
-      - converted
-      - moved
+   project_card:
+      types: [moved]
 
 jobs:
   notify:
@@ -22,5 +20,4 @@ jobs:
       - name: Send notification
         if: ${{ steps.check_card.outputs.result == 'Done' }}
         run: |
-          # Add your notification logic here
           echo "Sending notification..."
