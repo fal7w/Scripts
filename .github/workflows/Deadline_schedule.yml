@@ -1,0 +1,64 @@
+name: Deadline_schedule
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run every day at midnight UTC
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install requests library
+        run: pip install requests
+
+      - name: Check Deadline
+        id: check_deadline
+        run: |
+          import requests
+          import datetime
+
+          # GitHub API endpoint to get projects
+          url = "https://api.github.com/repos//users/fal7w/projects"
+          
+          
+          headers = {
+            "Authorization": "5HsgAw0RBB8Chu3Igzc+y4tFT4u3uRUphWdDDF+eL+U",
+            "Accept": "application/vnd.github.inertia-preview+json"
+          }
+          
+          # Send GET request to GitHub API
+          response = requests.get(url, headers=headers)
+          projects = response.json()
+
+          # Iterate over projects and check deadline
+          deadline = datetime.date(2023, 12, 31)
+          today = datetime.date.today()
+          if today == deadline:
+            notify = True
+          else:
+            notify = False
+
+          print(f"Notify: {notify}")
+          print(f"Today's Date: {today}")
+          print(f"Deadline: {deadline}")
+
+          # Set the output variable
+          print(f"::set-output name=notify::{notify}")
+
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: mail.fintechsys.net
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: 'Today is the deadline!'
+          message: "this notify for deadline"
+          to: ${{ secrets.USERS_EMAILS }}
+          from: github-actions@gmail.com
