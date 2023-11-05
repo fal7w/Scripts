@@ -2,7 +2,7 @@ name: Deadline Notification
 
 on:
   schedule:
-    # Run the workflow every day at 9 AM UTC
+    # Run the workflow every day at 10 AM UTC
     - cron: '0 10 * * *'
 
 jobs:
