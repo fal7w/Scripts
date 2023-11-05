@@ -23,7 +23,7 @@ jobs:
         run: |
           # Write your notification logic using JavaScript
           const today = new Date();
-          const deadline = new Date(' nov 4, 2023'); // Replace with your deadline date
+          const deadline = new Date(' nov 5, 2023'); // Replace with your deadline date
 
           let status = '';
           if (today >= deadline) {
