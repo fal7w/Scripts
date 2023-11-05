@@ -16,8 +16,7 @@ jobs:
       - name: Read HTML file
         id: read_html
         run: |
-          curl -o message.html -L "https://github.com/fal7w/Scripts/blob/main/messge.html"  # Replace <URL> with the actual URL of the HTML file
-
+         curl -o message.html -L "https://github.com/fal7w/Scripts/blob/main/messge.html"
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
         with:
