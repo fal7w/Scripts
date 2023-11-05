@@ -1,4 +1,4 @@
-name: discord_notify
+name: discord_notify_html
 
 on:
   issues:
