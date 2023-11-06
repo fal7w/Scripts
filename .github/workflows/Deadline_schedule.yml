@@ -45,8 +45,8 @@ jobs:
         run: |
           export DISPLAY=:99
 
-      - name: Install required Python packages
-        run: pip install <required_packages>
+      # - name: Install required Python packages
+      #   run: pip install <required_packages>
 
       - name: Run image processing code with Xvfb
         run: xvfb-run -s "-screen 0 1280x1024x24" python your_script.py
