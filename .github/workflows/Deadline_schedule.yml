@@ -19,6 +19,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libjpeg-dev zlib1g-dev
 
+      
+
       - name: install x server
         run: |
           sudo apt-get install xorg
@@ -30,7 +32,27 @@ jobs:
         if: ${{ failure() }}
         run: |
           sudo service lightdm restart
-          
+
+      - name: Install Xvfb and additional dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb <other_dependencies>
+
+      - name: Start Xvfb
+        run: |
+          Xvfb :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+
+      - name: Set display environment variable
+        run: |
+          export DISPLAY=:99
+
+      - name: Install required Python packages
+        run: pip install <required_packages>
+
+      - name: Run image processing code with Xvfb
+        run: xvfb-run -s "-screen 0 1280x1024x24" python your_script.py
+
+      
       - name: Install requests library
         run: pip install requests
 
