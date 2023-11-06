@@ -2,7 +2,7 @@ name: Deadline_schedule
 
 on:
   schedule:
-    - cron: '47 23 * * *'  # Run every day at 11:40 PM UTC
+    - cron: '50 13 * * *'   # Run every day at 11:40 PM UTC
 
 jobs:
   notify:
