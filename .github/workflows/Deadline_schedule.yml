@@ -24,11 +24,11 @@ jobs:
           import datetime
 
           # GitHub API endpoint to get projects
-          url = "https://api.github.com/repos//users/fal7w/projects"
+          url = "https://api.github.com/repos//users/fal7w/projects/2"
           
           
           headers = {
-            "Authorization": "5HsgAw0RBB8Chu3Igzc+y4tFT4u3uRUphWdDDF+eL+U",
+            "Authorization": "C6SwzYTFQzx5yleCtVT0snlmdLMjuZBtSd55j2VFinE",
             "Accept": "application/vnd.github.inertia-preview+json"
           }
           
