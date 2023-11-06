@@ -14,6 +14,23 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libjpeg-dev zlib1g-dev
+
+      - name: install x server
+        run: |
+          sudo apt-get install xorg
+
+      - name: Check X server
+        run: echo $DISPLAY
+        
+      - name: Restart X server
+        if: ${{ failure() }}
+        run: |
+          sudo service lightdm restart
+          
       - name: Install requests library
         run: pip install requests
 
