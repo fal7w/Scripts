@@ -18,8 +18,8 @@ projects = response.json()
 deadline_str = 'Oct 31, 2023'
 deadline = datetime.strptime(deadline_str, '%b %d, %Y').date()
 print(deadline)
-today = datetime.date.today()
-if today == deadline:
+
+if datetime.date.today() == deadline:
   notify = True
 else:
   notify = False
