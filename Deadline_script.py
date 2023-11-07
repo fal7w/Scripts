@@ -15,7 +15,7 @@ response = requests.get(url, headers=headers)
 projects = response.json()
 
 # Iterate over projects and check deadline
-deadline = datetime.date(2023, 12, 31)
+deadline = datetime.date(2023, 11,5)
 today = datetime.date.today()
 if today == deadline:
   notify = True
