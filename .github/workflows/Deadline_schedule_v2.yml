@@ -25,7 +25,7 @@ jobs:
       - name: execute py script # run main.py
         # env:
         #   SOME_SECRET: ${{ secrets.SOME_SECRET }}
-        run: python Deadline.script.py
+        run: python Deadline_script.py
 
       - name: commit files
         run: |
