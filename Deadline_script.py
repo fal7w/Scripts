@@ -1,5 +1,5 @@
 import requests
-from datetime import datetime,date,timedelta
+from datetime import datetime, date, timedelta
 
 # GitHub API endpoint to get projects
 url = "https://api.github.com/repos//users/fal7w/projects/2"
