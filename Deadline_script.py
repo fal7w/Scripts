@@ -26,5 +26,5 @@ print(f"Notify: {notify}")
 print(f"Today's Date: {today}")
 print(f"Deadline: {deadline}")
 
-          # Set the output variable
-          print(f"::set-output name=notify::{notify}")
+# Set the output variable
+print(f"::set-output name=notify::{notify}")
