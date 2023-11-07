@@ -19,7 +19,7 @@ deadline_str = 'Oct 31, 2023'
 deadline = datetime.strptime(deadline_str, '%b %d, %Y').date()
 print(deadline)
 
-if datetime.datetime.now()() == deadline:
+if datetime.now()() == deadline:
   notify = True
 else:
   notify = False
