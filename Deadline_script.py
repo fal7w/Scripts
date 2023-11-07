@@ -25,7 +25,7 @@ else:
   notify = False
 
 print(f"Notify: {notify}")
-print(f"Today's Date: {today}")
+print(f"Today's Date: {now}")
 print(f"Deadline: {deadline}")
 
 # Set the output variable
