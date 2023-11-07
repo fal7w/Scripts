@@ -18,7 +18,7 @@ jobs:
         path: ${{ env.DEV_DIR }}
 
     - name: Notify Deadline
-      run: python ${{ env.DEV_DIR }}/Deadline_script.py
+      run: python Scripts/Deadline_script.py
       shell: sh
 
     - name: Send email notification
