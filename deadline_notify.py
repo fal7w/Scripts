@@ -1,7 +1,7 @@
 import os
 import sys
 import datetime
-from dateutil.parser import parse
+# from dateutil.parser import parse
 from github import Github
 from github.GithubException import BadCredentialsException
 from github.GithubException import UnknownObjectException
