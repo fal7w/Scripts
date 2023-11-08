@@ -2,7 +2,7 @@ name: Deadline_Notify_v3
 
 on:
   schedule:
-    - cron: '0/5 0 * * *'  # Run every day at 9:00 UTC
+    - cron: '0/1 0 * * *'  # Run every day at 9:00 UTC
 
 jobs:
   notify:
