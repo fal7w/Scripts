@@ -4,43 +4,6 @@ import requests
 subprocess.check_call(['sudo', 'apt-get', 'update','-y'])
 subprocess.check_call(['sudo', 'apt-get', 'upgrade','-y'])
 
-# def update(commands):
-#     for command in commands:
-#         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-
-#         # Check the return code to see if the command executed successfully
-#         if result.returncode == 0:
-#             # Print the output of the command
-#             print(result.stdout)
-#         else:
-#             # Print the error message
-#             print(result.stderr)
-
-# commands_to_execute = [
-#     "sudo apt-get update -y",
-   
-# ]
-# update(commands_to_execute)
-
-# def upgrade(commands):
-#     for command in commands:
-#         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-
-#         # Check the return code to see if the command executed successfully
-#         if result.returncode == 0:
-#             # Print the output of the command
-#             print(result.stdout)
-#         else:
-#             # Print the error message
-#             print(result.stderr)
-
-# commands_to_execute = [
-    
-#     "sudo apt-get upgrade -y"
-# ]
-# upgrade(commands_to_execute)
-
-
 def Install_GIT_shell_commands(commands):
     for command in commands:
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
@@ -217,7 +180,7 @@ def Install_MYSQL_Server_shell_commands(commands):
     Reload privilege tables now? [Y/n]: Y
     '''
     for command in commands:
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        result = subprocess.run(command, shell=True)
 
         # Check the return code to see if the command executed successfully
         if result.returncode == 0:
@@ -231,11 +194,11 @@ def Install_MYSQL_Server_shell_commands(commands):
 commands_to_execute = [
     "sudo mysql_secure_installation"
 ]
-Install_MYSQL_Server_shell_commands(commands_to_execute)
+# Install_MYSQL_Server_shell_commands(commands_to_execute)
 
 def Edit_MYSQL_default_config_file(commands):
     for command in commands:
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        result = subprocess.run(command, shell=True)
 
         # Check the return code to see if the command executed successfully
         if result.returncode == 0:
@@ -370,7 +333,7 @@ Install_Frappe_Bench(commands_to_execute)
 
 def Initialize_Frappe_Bench(commands):
     for command in commands:
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        result = subprocess.run(command, shell=True)
 
         # Check the return code to see if the command executed successfully
         if result.returncode == 0:
@@ -386,39 +349,41 @@ commands_to_execute = [
 Initialize_Frappe_Bench(commands_to_execute)
 
 
-#Switch directories into the Frappe Bench directory
-def Switch_directories(commands):
-    for command in commands:
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+# #Switch directories into the Frappe Bench directory
+# def Switch_directories(commands):
+#     for command in commands:
+#         result = subprocess.run(command, shell=True)
 
-        # Check the return code to see if the command executed successfully
-        if result.returncode == 0:
-            # Print the output of the command
-            print(result.stdout)
-        else:
-            # Print the error message
-            print(result.stderr)
+#         # Check the return code to see if the command executed successfully
+#         if result.returncode == 0:
+#             # Print the output of the command
+#             print(result.stdout)
+#         else:
+#             # Print the error message
+#             print(result.stderr)
 
-commands_to_execute = [
-    "cd frappe-bench"
-]
-Switch_directories(commands_to_execute)
+# commands_to_execute = [
+#     "cd frappe-bench"
+# ]
+# Switch_directories(commands_to_execute)
 
-def Create_New_Site(commands):
-    for command in commands:
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+# //////////////////////////
 
-        # Check the return code to see if the command executed successfully
-        if result.returncode == 0:
-            # Print the output of the command
-            print(result.stdout)
-        else:
-            # Print the error message
-            print(result.stderr)
+# def Create_New_Site(commands):
+#     for command in commands:
+#         result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
-commands_to_execute = [
-    "bench new-site fintech"
-]
-Create_New_Site(commands_to_execute)
+#         # Check the return code to see if the command executed successfully
+#         if result.returncode == 0:
+#             # Print the output of the command
+#             print(result.stdout)
+#         else:
+#             # Print the error message
+#             print(result.stderr)
+
+# commands_to_execute = [
+#     "bench new-site fintech"
+# ]
+# Create_New_Site(commands_to_execute)
 
 
