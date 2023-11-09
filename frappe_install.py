@@ -194,7 +194,7 @@ def Install_MYSQL_Server_shell_commands(commands):
 commands_to_execute = [
     "sudo mysql_secure_installation"
 ]
-# Install_MYSQL_Server_shell_commands(commands_to_execute)
+Install_MYSQL_Server_shell_commands(commands_to_execute)
 
 def Edit_MYSQL_default_config_file(commands):
     for command in commands:
