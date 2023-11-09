@@ -13,6 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: HTML Preview
+        id: html_preview
+        uses: pavi2410/html-preview-action@v2
+        with:
+          html_file: 'messge.html'
+      
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
         with:
@@ -21,9 +27,10 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'New Issue Opened'
-          body: |
-            Hello! A new issue has been opened in the repository.
-            Issue Title: ${{ github.event.issue.title }}
-            Issue URL: ${{ github.event.issue.html_url }}
+          message: |
+            # Hello! A new issue has been opened in the repository.
+            # Issue Title: ${{ github.event.issue.title }}
+            # Issue URL: ${{ github.event.issue.html_url }}
+            ${{ steps.html_preview.outputs.message }}
           to: ${{ secrets.USERS_EMAILS }}
           from: github-actions@gmail.com
