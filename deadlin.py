@@ -1,7 +1,7 @@
 from github import Github
 
 # Replace with your GitHub personal access token
-access_token = 'C6SwzYTFQzx5yleCtVT0snlmdLMjuZBtSd55j2VFinE'
+access_token = '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'
 
 # Replace with the URL of your GitHub repository
 repository_url = 'https://github.com/fal7w/Scripts'

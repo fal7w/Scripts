@@ -123,7 +123,7 @@ def check_access_and_download_images(command):
 command = "docker run hello-world"
 check_access_and_download_images(command)
 
-# //////////////////////////////////////////////////////////////////////////////////////////
+# -------------------------------------------------------------------------------
 
 def install_docker_compose():
     try:

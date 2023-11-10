@@ -18,7 +18,7 @@ REPO = "Scripts"
 # EMAIL_SUBJECT = "GitHub Project Status"
 
 # GitHub personal access token
-TOKEN = "C6SwzYTFQzx5yleCtVT0snlmdLMjuZBtSd55j2VFinE"
+TOKEN = "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"
 
 def get_project_status():
     url = f"{BASE_URL}/repos/{OWNER}/{REPO}/projects/2"

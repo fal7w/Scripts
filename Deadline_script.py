@@ -6,7 +6,7 @@ url = "https://api.github.com/repos//users/fal7w/projects/2"
 
 
 headers = {
-  "Authorization": "C6SwzYTFQzx5yleCtVT0snlmdLMjuZBtSd55j2VFinE",
+  "Authorization": "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",
   "Accept": "application/vnd.github.inertia-preview+json"
 }
 
