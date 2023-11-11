@@ -347,7 +347,7 @@ commands_to_execute = [
     "bench init --frappe-branch version-14 frappe-bench"
 ]
 Initialize_Frappe_Bench(commands_to_execute)
-
+    
 
 # #Switch directories into the Frappe Bench directory
 # def Switch_directories(commands):

@@ -1,70 +1,28 @@
-import requests
-from datetime import datetime
-from smtplib import SMTP_SSL
-from email.mime.text import MIMEText
+from github import Github
 
-# GitHub API endpoint
-BASE_URL = "https://api.github.com"
+access_token = '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'
 
-# GitHub project information
-OWNER = "fal7w"
-REPO = "Scripts"
+g = Github(access_token)
 
-# Email configuration
-# SMTP_HOST = "mail.fintechsys.net"
-# SMTP_PORT = 465
-# EMAIL_FROM = "github-actions@gmail.com"
-# EMAIL_TO = "f.alfalahi@fintechsys.net"
-# EMAIL_SUBJECT = "GitHub Project Status"
+# Repository information
+repo_owner = 'fal7w'
+repo_name = 'Scripts'
 
-# GitHub personal access token
-TOKEN = "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"
+project_number = 2  
 
-def get_project_status():
-    url = f"{BASE_URL}/repos/{OWNER}/{REPO}/projects/2"
-    headers = {"Authorization": f"Bearer {TOKEN}"}
+repo = g.get_repo(f'{repo_owner}/{repo_name}')
 
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        projects = response.json()
-        if projects:
-            project = projects[0]  # Assuming the first project is the one of interest
-            project_name = project["name"]
-            project_url = project["html_url"]
-            project_state = project["state"]
-            project_created_at = project["created_at"]
-            project_updated_at = project["updated_at"]
+project = repo.get_project(project_number)
 
-            status = f"Project: {project_name}\n"
-            status += f"URL: {project_url}\n"
-            status += f"State: {project_state}\n"
-            status += f"Created at: {project_created_at}\n"
-            status += f"Updated at: {project_updated_at}\n"
+columns = project.get_columns()
 
-            return status
-
-    return None
-
-# def send_email_notification(content):
-    message = MIMEText(content)
-    message["Subject"] = EMAIL_SUBJECT
-    message["From"] = EMAIL_FROM
-    message["To"] = EMAIL_TO
-
-    with SMTP_SSL(SMTP_HOST, SMTP_PORT) as server:
-        server.login(EMAIL_FROM, "your_email_password")
-        server.send_message(message)
-
-def main():
-    project_status = get_project_status()
-    # if project_status:
-        # send_email_notification(project_status)
-        # print("Notification sent successfully!")
-    # else:
-    #     print("Failed to retrieve project status.")
-
-if __name__ == "__main__":
-    main()
-
-
-
+# Iterate over the columns
+for column in columns:
+    print(f"Column: {column.name}")
+    print("Issues:")
+    cards = column.get_cards()
+    for card in cards:
+        issue = card.get_content()
+        status = 'To do' if issue.state == 'open' else 'Done' if issue.state == 'closed' else 'In progress'
+        print(f"Issue: {issue.title} - Status: {status}")
+    print()
