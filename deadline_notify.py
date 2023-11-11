@@ -23,6 +23,6 @@ for column in columns:
     cards = column.get_cards()
     for card in cards:
         issue = card.get_content()
-        status = 'To do' if issue.state == 'open' else 'Done' if issue.state == 'closed' else 'In progress'
+        status = 'Todo' if issue.state == 'open' else 'Done' if issue.state == 'closed' else 'In progress'
         print(f"Issue: {issue.title} - Status: {status}")
     print()
