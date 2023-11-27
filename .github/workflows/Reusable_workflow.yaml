@@ -1,0 +1,18 @@
+name: Reusable workflow 
+
+on:
+  workflow_call:
+
+
+jobs:
+  rul_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout Script content
+        uses: actions/checkout@v2
+
+
+      - name: write same thing
+        run: |
+          echo"reusablle workflow on 36-ssdd branch"
