@@ -15,4 +15,4 @@ jobs:
 
       - name: write same thing
         run: |
-          echo"reusablle workflow on main branch"
+          echo "reusablle workflow on main branch"
