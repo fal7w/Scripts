@@ -22,10 +22,69 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'New pull_request Opened'
-          # body: |
-          #   Hello! A new pull_request has been opened in the repository.
-          #   # pull_request Title: ${{ github.event.pull_request.title }}
-          #   # pull_request URL: ${{ github.event.pull_request.html_url }}
-          html_body: file://messge2.html
+          body: |
+            Hello! A new pull_request has been opened in the repository.
+            pull request Title: ${{ github.event.pull_request.title }}
+            pull request URL: ${{ github.event.pull_request.html_url }}
+          html_body: |
+          
+              <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>New Issue Notification</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            background-color: #f2f2f2;
+                            margin: 0;
+                            padding: 0;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100vh;
+                        }
+                
+                        .container {
+                            text-align: center;
+                            padding: 30px;
+                            background-color: #ffffff;
+                            border-radius: 10px;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                        }
+                
+                        h1 {
+                            font-size: 36px;
+                            font-weight: bold;
+                            line-height: 1.3;
+                            margin-bottom: 20px;
+                        }
+                
+                        h2 {
+                            font-size: 24px;
+                            font-weight: normal;
+                            margin-bottom: 10px;
+                        }
+                
+                        a {
+                            color: #ff6600;
+                            text-decoration: none;
+                            transition: color 0.3s ease;
+                        }
+                
+                        a:hover {
+                            color: #333333;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>New pull request Opened</h1>
+                        <h2>pull request Title: <span id="issueTitle"> ${{ github.event.pull_request.title }} </span></h2>
+                        <h2>pull request URL: <a id="issueURL" href=" " target="_blank"> ${{ github.event.pull_request.html_url }} </a></h2>
+                    </div>
+                </body>
+                </html>
+          
           to: ${{ secrets.USERS_EMAILS }}
           from: github-actions@gmail.com
