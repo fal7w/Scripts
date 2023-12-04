@@ -59,9 +59,8 @@ jobs:
               </tr>
               <tr>
                 <td>pull request URL</td>
-                <td>${{ github.event.pull_request.html_url }}</td>
+                <td><a id="pullURL" href=" " target="_blank"> ${{ github.event.pull_request.html_url }} </a></td>
               </tr>
-              
             </table>
             
             </body>
