@@ -84,6 +84,28 @@ jobs:
                         <h2>pull request URL: <a id="issueURL" href=" " target="_blank"> ${{ github.event.pull_request.html_url }} </a></h2>
                     </div>
                 </body>
+                <script>
+                    async function fetchIssueData() {
+                        try {
+                            const response = await fetch('message.html');
+                            const data = await response.text();
+                            const parser = new DOMParser();
+                            const htmlContent = parser.parseFromString(data, 'text/html');
+                            const issueTitle = htmlContent.getElementById('issueTitle').textContent;
+                            const issueURL = htmlContent.getElementById('issueURL').textContent;
+                
+                            document.getElementById('issueTitle').innerText = issueTitle;
+                            document.getElementById('issueURL').href = issueURL;
+                            document.getElementById('issueURL').innerText = issueURL;
+                        } catch (error) {
+                            console.error('Error fetching issue data:', error);
+                        }
+                    }
+                
+                    document.addEventListener('DOMContentLoaded', function() {
+                        fetchIssueData();
+                    });
+                </script>
                 </html>
           
           to: ${{ secrets.USERS_EMAILS }}
