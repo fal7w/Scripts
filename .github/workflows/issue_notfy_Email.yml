@@ -83,7 +83,7 @@ jobs:
               <body>
                   <div class="container">
                       <h1>New Issue Opened</h1>
-                      <h2>Issue Title: <span id="issueTitle"> ${{ github.event.issue.title }} </span></h2>
+                      <h2 "font-weight: bold; position: absolute; left: 30px;">Issue Title: <span id="issueTitle"> ${{ github.event.issue.title }} </span></h2>
                       <h2>Issue URL: <a id="issueURL" href=" " target="_blank"> ${{ github.event.issue.html_url }} </a></h2>
                   </div>
               </body>
