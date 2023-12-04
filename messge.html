@@ -50,8 +50,8 @@
 <body>
     <div class="container">
         <h1>New Issue Notification</h1>
-        <h2>Issue Title: <span id="issueTitle"> </span></h2>
-        <h2>Issue URL: <a id="issueURL" href="" target="_blank"></a></h2>
+        <h2>Issue Title: <span id="issueTitle"> ${{ github.event.pull_request.title }} </span></h2>
+        <h2>Issue URL: <a id="issueURL" href="" target="_blank"> ${{ github.event.pull_request.html_url }} </a></h2>
     </div>
 </body>
 <script>
