@@ -12,12 +12,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: HTML Preview
-        id: html_preview
-        uses: pavi2410/html-preview-action@v2
-        with:
-          html_file: 'messge.html'
       
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
@@ -34,14 +28,10 @@ jobs:
           #   ${{ steps.html_preview.outputs.message }}
           # to: ${{ secrets.USERS_EMAILS }}
           # from: github-actions@gmail.com
-
-
-
-
-          body: |
-            Hello! A new pull_request has been opened in the repository.
-            # pull_request Title: ${{ github.event.pull_request.title }}
-            # pull_request URL: ${{ github.event.pull_request.html_url }}
+          # body: |
+          #   Hello! A new pull_request has been opened in the repository.
+          #   # pull_request Title: ${{ github.event.pull_request.title }}
+          #   # pull_request URL: ${{ github.event.pull_request.html_url }}
           html_body: file://messge.html
           to: ${{ secrets.USERS_EMAILS }}
           from: github-actions@gmail.com
