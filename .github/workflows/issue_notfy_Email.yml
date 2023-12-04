@@ -26,11 +26,22 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: 'New Issue Opened'
-          message: |
-            # Hello! A new issue has been opened in the repository.
-            # Issue Title: ${{ github.event.issue.title }}
-            # Issue URL: ${{ github.event.issue.html_url }}
-            ${{ steps.html_preview.outputs.message }}
+          # subject: 'New Issue Opened'
+          # message: |
+          #   # Hello! A new issue has been opened in the repository.
+          #   # Issue Title: ${{ github.event.issue.title }}
+          #   # Issue URL: ${{ github.event.issue.html_url }}
+          #   ${{ steps.html_preview.outputs.message }}
+          # to: ${{ secrets.USERS_EMAILS }}
+          # from: github-actions@gmail.com
+
+
+
+
+          body: |
+            Hello! A new pull_request has been opened in the repository.
+            # pull_request Title: ${{ github.event.pull_request.title }}
+            # pull_request URL: ${{ github.event.pull_request.html_url }}
+          html_body: file://messge.html
           to: ${{ secrets.USERS_EMAILS }}
           from: github-actions@gmail.com
