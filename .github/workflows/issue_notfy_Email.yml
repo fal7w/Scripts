@@ -2,8 +2,7 @@ name: Send email notification
 
 on:
   issues:
-    types:
-      - opened
+    types: [opened]
 
 jobs:
   send_notification:
