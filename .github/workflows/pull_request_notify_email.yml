@@ -22,10 +22,10 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'New pull_request Opened'
-          body: |
-            Hello! A new pull_request has been opened in the repository.
-            # pull_request Title: ${{ github.event.pull_request.title }}
-            # pull_request URL: ${{ github.event.pull_request.html_url }}
+          # body: |
+          #   Hello! A new pull_request has been opened in the repository.
+          #   # pull_request Title: ${{ github.event.pull_request.title }}
+          #   # pull_request URL: ${{ github.event.pull_request.html_url }}
           html_body: file://messge.html
           to: ${{ secrets.USERS_EMAILS }}
           from: github-actions@gmail.com
