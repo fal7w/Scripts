@@ -15,4 +15,4 @@ jobs:
 
       - name: write same thing
         run: |
-          echo "reusablle workflow on main branch"
+          git clone https://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@github.com/malnozili/remittance_image_builder.git
