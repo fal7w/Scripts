@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout Script content
-        uses: actions/checkout@v2
+      # - name: checkout Script content
+      #   uses: actions/checkout@v2
 
         # git clone https://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@github.com/malnozili/remittance_image_builder.git
 
