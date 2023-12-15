@@ -2,6 +2,7 @@ name: Reusable workflow
 
 on:
   workflow_call:
+  workflow_dispatch:
 
 
 jobs:
@@ -12,7 +13,14 @@ jobs:
       - name: checkout Script content
         uses: actions/checkout@v2
 
+        # git clone https://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@github.com/malnozili/remittance_image_builder.git
 
-      - name: write same thing
+      - name: Generate two random ports between 1024 and 65535
         run: |
-          git clone https://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@github.com/malnozili/remittance_image_builder.git
+       
+          port1=$((RANDOM%64311+1024))
+          port2=$((RANDOM%64311+1024))
+
+          # Print the generated ports
+          echo "Random Port 1: $port1"
+          echo "Random Port 2: $port2"
