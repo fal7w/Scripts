@@ -18,7 +18,7 @@ jobs:
         id: random_port
         run: |
           echo "port=$((8081 + RANDOM % 1919))"
-          echo port
+          echo $port
 
 
       
