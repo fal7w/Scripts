@@ -17,7 +17,7 @@ jobs:
       - name: Generate Random Port
         id: random_port
         run: |
-          echo "$((8081 + RANDOM % 1919))"
+          echo "$((8081 + RANDOM % 919))"
    
 
 
