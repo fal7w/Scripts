@@ -11,8 +11,8 @@ jobs:
 
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      # - name: Checkout repository
+      #   uses: actions/checkout@v2
 
       - name: Generate Random Port
         id: random_port
