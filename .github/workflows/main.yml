@@ -1,0 +1,25 @@
+name: Create_Pull_Request_on _Issue_Close_test
+
+on:
+  issues:
+    types:
+      - closed
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: 45-ggg
+          base: main
+          title: Automatic PR - ${{ github.event.issue.title }}
+          body: |
+            Automatic pull request created when issue was closed.
+            Issue: ${{ github.event.issue.html_url }}
