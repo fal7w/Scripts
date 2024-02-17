@@ -1,0 +1,102 @@
+name: Deadline_schedule
+
+on:
+  schedule:
+    - cron: '*/2 * * * *'  # Run every 2 minutes
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libjpeg-dev zlib1g-dev
+
+      
+
+      - name: install x server
+        run: |
+          sudo apt-get install xorg
+
+      - name: Check X server
+        run: echo $DISPLAY
+        
+      - name: Restart X server
+        if: ${{ failure() }}
+        run: |
+          sudo service lightdm restart
+
+      - name: Install Xvfb and additional dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb 
+      - name: Start Xvfb
+        run: |
+          Xvfb :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+
+      - name: Set display environment variable
+        run: |
+          export DISPLAY=:99
+
+      # - name: Install required Python packages
+      #   run: pip install <required_packages>
+
+      - name: Run image processing code with Xvfb
+        run: xvfb-run -s "-screen 0 1280x1024x24" python your_script.py
+
+      
+      - name: Install requests library
+        run: pip install requests
+
+      - name: Check Deadline
+        id: check_deadline
+        run: |
+          import requests
+          from datetime import datetime,date,timedelta
+
+          # GitHub API endpoint to get projects
+          url = "https://api.github.com/repos//users/fal7w/projects/2"
+          
+          
+          headers = {
+            "Authorization": "C6SwzYTFQzx5yleCtVT0snlmdLMjuZBtSd55j2VFinE",
+            "Accept": "application/vnd.github.inertia-preview+json"
+          }
+          
+          # Send GET request to GitHub API
+          response = requests.get(url, headers=headers)
+          projects = response.json()
+
+          # Iterate over projects and check deadline
+          deadline = datetime.date(2023, 12, 31)
+          today = datetime.date.today()
+          if today == deadline:
+            notify = True
+          else:
+            notify = False
+
+          print(f"Notify: {notify}")
+          print(f"Today's Date: {today}")
+          print(f"Deadline: {deadline}")
+
+          # Set the output variable
+          print(f"::set-output name=notify::{notify}")
+
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: mail.fintechsys.net
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: 'Today is the deadline!'
+          message: "this notify for deadline"
+          to: ${{ secrets.USERS_EMAILS }}
+          from: github-actions@gmail.com

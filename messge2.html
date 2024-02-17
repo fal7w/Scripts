@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>${{ github.workflow }} - Successful</h2>
+
+<table>
+  <tr>
+    <td>Issue Title </td>
+    <td>${{ github.event.pull_request.title }}</td>
+  </tr>
+  <tr>
+    <td>Issue URL</td>
+    <td>${{ github.event.pull_request.html_url }}</td>
+  </tr>
+  <!-- <tr>
+    <td>GitHub Branch Name</td>
+    <td>${{ github.ref_name }}</td>
+  </tr>
+  <tr>
+    <td>Commit Message</td>
+    <td>${{ github.event.head_commit.message }}</td>
+  </tr>
+  <tr>
+    <td>Commit Count or Build Number</td>
+    <td>${{ env.git_commit_count }}</td>
+  </tr>
+  <tr>
+    <td>Daily Builds</td>
+    <td>${{ secrets.DAILY_BUILDS_URL }}</td>
+  </tr> -->
+</table>
+
+</body>
+</html>

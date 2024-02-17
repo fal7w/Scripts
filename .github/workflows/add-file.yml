@@ -1,0 +1,42 @@
+name: Add file to multiuple repos
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  distribute:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Git Config
+      run: |
+        git config --global user.email "falahmohammeda@gmail.com"
+        git config --global user.name "fal7w"
+
+    - name: Distribute File
+      env:
+        REPO_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # Define target repos and the file to distribute
+        TARGET_REPOS=("fal7w/Our_Project " "fal7w/Zap")
+        FILE="text_file2.txt"
+
+        # Loop through all target repos
+        for REPO in "${TARGET_REPOS[@]}"; do
+          # Temporary clone the target repository
+          git clone https://github.com/${REPO}.git
+          REPO_NAME=$(basename ${REPO})
+
+          # Copy the file to the repository
+          cp ${FILE} ${REPO_NAME}/
+
+          # Commit and push the file
+          cd ${REPO_NAME}
+          git add .
+          git commit -m "Update distributed file"
+          git push https://fal7w:${REPO_ACCESS_TOKEN}@github.com/${REPO}.git
+          cd ..
+        done
+
