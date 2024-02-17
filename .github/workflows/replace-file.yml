@@ -1,0 +1,39 @@
+name: Replace File Across Repositories
+
+on:
+
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  replace-file:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install PyGithub
+      run: pip install PyGithub
+
+    - name: Replace File
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Assumes you've added your PAT as a secret in the repository settings
+      run: |
+        python -c "
+        import os
+        from github import Github
+        
+        g = Github(os.getenv('GITHUB_TOKEN'))
+        repos = ['fal7w/Scripts', 'fal7w/Our_Project ']
+
+        for repo_name in repos:
+            repo = g.get_repo(repo_name)
+            contents = repo.get_contents('path/to/target/file', ref='main') # Adjust ref as needed
+            with open('path/to/your/new/file', 'rb') as file:
+                repo.delete_file(contents.path, 'Remove old file', contents.sha, branch='main') # Adjust branch as needed
+                repo.create_file(contents.path, 'Add new file', file.read(), branch='main') # Adjust branch as needed
+        "
