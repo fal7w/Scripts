@@ -1,4 +1,4 @@
-name: Distribute Files to Multiple Repositories
+name: Add file to multiuple repos
 
 on:
   workflow_dispatch:
