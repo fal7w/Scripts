@@ -6,7 +6,7 @@ on:
 
 jobs:
   replace-file:
-    runs-on: fintech_runner
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
