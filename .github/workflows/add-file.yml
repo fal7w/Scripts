@@ -1,39 +1,42 @@
-name: Replace File Across Repositories
+name: Distribute Files to Multiple Repositories
 
 on:
-
-  workflow_dispatch: # Allows manual triggering
-
+  workflow_dispatch:
+  
 jobs:
-  replace-file:
+  distribute:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-
-    - name: Install PyGithub
-      run: pip install PyGithub
-
-    - name: Replace File
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Assumes you've added your PAT as a secret in the repository settings
+    - name: Setup Git Config
       run: |
-        python -c "
-        import os
-        from github import Github
-        
-        g = Github(os.getenv('GITHUB_TOKEN'))
-        repos = ['fal7w/Scripts', 'fal7w/Our_Project ']
+        git config --global user.email "falahmohammeda@gmail.com"
+        git config --global user.name "fal7w"
 
-        for repo_name in repos:
-            repo = g.get_repo(repo_name)
-            contents = repo.get_contents('path/to/target/file', ref='main') # Adjust ref as needed
-            with open('path/to/your/new/file', 'rb') as file:
-                repo.delete_file(contents.path, 'Remove old file', contents.sha, branch='main') # Adjust branch as needed
-                repo.create_file(contents.path, 'Add new file', file.read(), branch='main') # Adjust branch as needed
-        "
+    - name: Distribute File
+      env:
+        REPO_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # Define target repos and the file to distribute
+        TARGET_REPOS=("fal7w/Our_Project " "fal7w/Zap")
+        FILE="path/to/yourfile.txt"
+
+        # Loop through all target repos
+        for REPO in "${TARGET_REPOS[@]}"; do
+          # Temporary clone the target repository
+          git clone https://github.com/${REPO}.git
+          REPO_NAME=$(basename ${REPO})
+
+          # Copy the file to the repository
+          cp ${FILE} ${REPO_NAME}/
+
+          # Commit and push the file
+          cd ${REPO_NAME}
+          git add .
+          git commit -m "Update distributed file"
+          git push https://YOUR_USERNAME:${REPO_ACCESS_TOKEN}@github.com/${REPO}.git
+          cd ..
+        done
+
