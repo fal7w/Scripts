@@ -21,7 +21,7 @@ jobs:
       run: |
         # Define target repos and the file to distribute
         TARGET_REPOS=("fal7w/Our_Project " "fal7w/Zap")
-        FILE="path/to/yourfile.txt"
+        FILE="text_file2.txt"
 
         # Loop through all target repos
         for REPO in "${TARGET_REPOS[@]}"; do
@@ -36,7 +36,7 @@ jobs:
           cd ${REPO_NAME}
           git add .
           git commit -m "Update distributed file"
-          git push https://YOUR_USERNAME:${REPO_ACCESS_TOKEN}@github.com/${REPO}.git
+          git push https://fal7w:${REPO_ACCESS_TOKEN}@github.com/${REPO}.git
           cd ..
         done
 
