@@ -59,10 +59,11 @@
 
     - name: Create backup using borg
       command: borg create --stats --progress /root/lago_backup_repo::backup-{{ ansible_date_time.date }} /root/lago_backup
-      when: "'backup-{{ ansible_date_time.date }}' not in borg_list.stdout"
-      become: yes
+      when: backup_name not in borg_list.stdout
+      vars:
+        backup_name: "backup-{{ ansible_date_time.date }}"- name: Extract borg backup
 
-- name: Extract borg backup
+        
   hosts: 149.102.140.77
   tasks:
     - name: Ensure Borg is installed
