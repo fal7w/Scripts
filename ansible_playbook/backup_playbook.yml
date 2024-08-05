@@ -1,6 +1,6 @@
 ---
 - name: Automate Docker and Borg backup
-  hosts: localhost
+  hosts: 194.163.154.164
   tasks:
     - name: Execute pg_dump inside docker container lago
       command: docker exec lago-db bash -c "pg_dump -U lago lago > /tmp/db_backup.sql"
