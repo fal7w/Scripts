@@ -30,10 +30,9 @@
     ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Ensure Borg is installed
-      apt:
+      ansible.builtin.package:
         name: borgbackup
         state: present
-        update_cache: yes
 
     - name: Ensure backup directory exists on the remote host
       file:
