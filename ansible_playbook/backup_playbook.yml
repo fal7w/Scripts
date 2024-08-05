@@ -48,10 +48,15 @@
       command: borg init --encryption=repokey-blake2 /root/lago_backup_repo
       when: not repo_stat.stat.exists
 
+    - name: Check if borg archive exists
+      command: borg list /root/lago_backup_repo
+      register: borg_list
+      failed_when: false
+      changed_when: false
+
     - name: Reinitialize borg repository if no manifest
       command: borg init --encryption=repokey-blake2 /root/lago_backup_repo --recreate
       when: borg_list.rc != 0 and 'Repository has no manifest' in borg_list.stderr
-
 
 - name: Create borg backup
   hosts: 194.163.154.164
