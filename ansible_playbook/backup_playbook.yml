@@ -2,8 +2,13 @@
 - name: Automate Docker and Borg backup
   hosts: 194.163.154.164
   tasks:
-    - name: Execute pg_dump inside docker container lago
+    - name: Execute pwd inside docker container lago
       command: pwd
+      register: pwd_output
+
+    - name: Print the working directory
+      debug:
+        msg: "Current working directory inside the container: {{ pwd_output.stdout }}"
       # command: docker exec lago-db bash -c "pg_dump -U lago lago > /tmp/db_backup.sql"
 
 #     - name: Copy backup file from docker container to host
