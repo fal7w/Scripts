@@ -23,24 +23,24 @@
       command: docker cp sonar-lint-db-1:/tmp/sonarqube_backup.sql /root/lago_backup/sonarqube_backup.sql
 
 
-- name: Initialize borg repository
-  hosts: 194.163.154.164
-  tasks:
-    - name: Ensure Borg is installed
-      package:
-        name: borgbackup
-        state: present
-      become: yes
+# - name: Initialize borg repository
+#   hosts: 194.163.154.164
+#   tasks:
+#     - name: Ensure Borg is installed
+#       package:
+#         name: borgbackup
+#         state: present
+#       become: yes
 
-    - name: Check if borg repository exists
-      stat:
-        path: /root/lago_backup_repo
-      register: repo_stat
+#     - name: Check if borg repository exists
+#       stat:
+#         path: /root/lago_backup_repo
+#       register: repo_stat
 
-    - name: Initialize borg repository with encryption
-      command: borg init --encryption=repokey-blake2 /root/lago_backup_repo
-      when: not repo_stat.stat.exists
-      become: yes
+#     - name: Initialize borg repository with encryption
+#       command: borg init --encryption=repokey-blake2 /root/lago_backup_repo
+#       when: not repo_stat.stat.exists
+#       become: yes
 
 - name: Create borg backup
   hosts: 194.163.154.164
