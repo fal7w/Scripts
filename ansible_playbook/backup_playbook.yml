@@ -1,66 +1,66 @@
 ---
-- name: Automate Docker and Borg backup
-  hosts: 194.163.154.164
-  tasks:
-    - name: Execute pg_dump inside docker container lago
-      command: docker exec lago-db bash -c "pg_dump -U lago lago > /tmp/db_backup.sql"
+# - name: Automate Docker and Borg backup
+#   hosts: 194.163.154.164
+#   tasks:
+#     - name: Execute pg_dump inside docker container lago
+#       command: docker exec lago-db bash -c "pg_dump -U lago lago > /tmp/db_backup.sql"
 
-    - name: Copy backup file from docker container to host
-      command: docker cp lago-db:/tmp/db_backup.sql /root/lago_backup/db_backup.sql
+#     - name: Copy backup file from docker container to host
+#       command: docker cp lago-db:/tmp/db_backup.sql /root/lago_backup/db_backup.sql
 
     
-    - name: Execute pg_dump inside docker container wiki
-      command: docker exec requarks-wiki-db-1 bash -c "pg_dump -U wikijs wiki > /tmp/wiki_backup.sql"
+#     - name: Execute pg_dump inside docker container wiki
+#       command: docker exec requarks-wiki-db-1 bash -c "pg_dump -U wikijs wiki > /tmp/wiki_backup.sql"
 
-    - name: Copy backup file from docker container to host
-      command: docker cp requarks-wiki-db-1:/tmp/wiki_backup.sql /root/lago_backup/wiki_backup.sql
-
-
-    - name: Execute pg_dump inside docker container sonarqube
-      command: docker exec sonar-lint-db-1 bash -c "pg_dump -U sonar -d sonar > /tmp/sonarqube_backup.sql"
-
-    - name: Copy backup file from docker container to host
-      command: docker cp sonar-lint-db-1:/tmp/sonarqube_backup.sql /root/lago_backup/sonarqube_backup.sql
+#     - name: Copy backup file from docker container to host
+#       command: docker cp requarks-wiki-db-1:/tmp/wiki_backup.sql /root/lago_backup/wiki_backup.sql
 
 
-- name: Initialize borg repository
-  hosts: 194.163.154.164
-  tasks:
-    - name: Ensure Borg is installed
-      package:
-        name: borgbackup
-        state: present
-      become: yes
+#     - name: Execute pg_dump inside docker container sonarqube
+#       command: docker exec sonar-lint-db-1 bash -c "pg_dump -U sonar -d sonar > /tmp/sonarqube_backup.sql"
 
-    - name: Check if borg repository exists
-      stat:
-        path: /root/lago_backup_repo
-      register: repo_stat
+#     - name: Copy backup file from docker container to host
+#       command: docker cp sonar-lint-db-1:/tmp/sonarqube_backup.sql /root/lago_backup/sonarqube_backup.sql
 
-    - name: Initialize borg repository with encryption
-      command: borg init --encryption=repokey-blake2 /root/lago_backup_repo
-      when: not repo_stat.stat.exists
-      become: yes
 
-- name: Create borg backup
-  hosts: 194.163.154.164
-  tasks:
-    - name: Ensure Borg is installed
-      package:
-        name: borgbackup
-        state: present
-      become: yes
+# - name: Initialize borg repository
+#   hosts: 194.163.154.164
+#   tasks:
+#     - name: Ensure Borg is installed
+#       package:
+#         name: borgbackup
+#         state: present
+#       become: yes
 
-    - name: Check if borg archive exists
-      command: borg list /root/lago_backup_repo
-      register: borg_list
-      failed_when: false
-      changed_when: false
+#     - name: Check if borg repository exists
+#       stat:
+#         path: /root/lago_backup_repo
+#       register: repo_stat
 
-    - name: Create backup using borg
-      command: borg create --stats --progress /root/lago_backup_repo::backup-{{ ansible_date_time.date }} /root/lago_backup
-      when: "'backup-{{ ansible_date_time.date }}' not in borg_list.stdout"
-      become: yes
+#     - name: Initialize borg repository with encryption
+#       command: borg init --encryption=repokey-blake2 /root/lago_backup_repo
+#       when: not repo_stat.stat.exists
+#       become: yes
+
+# - name: Create borg backup
+#   hosts: 194.163.154.164
+#   tasks:
+#     - name: Ensure Borg is installed
+#       package:
+#         name: borgbackup
+#         state: present
+#       become: yes
+
+#     - name: Check if borg archive exists
+#       command: borg list /root/lago_backup_repo
+#       register: borg_list
+#       failed_when: false
+#       changed_when: false
+
+#     - name: Create backup using borg
+#       command: borg create --stats --progress /root/lago_backup_repo::backup-{{ ansible_date_time.date }} /root/lago_backup
+#       when: "'backup-{{ ansible_date_time.date }}' not in borg_list.stdout"
+#       become: yes
 
 - name: Extract borg backup
   hosts: 149.102.140.77
