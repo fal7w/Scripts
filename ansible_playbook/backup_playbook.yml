@@ -62,8 +62,32 @@
 #       when: "'backup-{{ ansible_date_time.date }}' not in borg_list.stdout"
 #       become: yes
 
+# - name: Extract borg backup
+#   hosts: 149.102.140.77
+#   tasks:
+#     - name: Ensure Borg is installed
+#       package:
+#         name: borgbackup
+#         state: present
+#       become: yes
+
+#     - name: Create extraction directory
+#       file:
+#         path: ~/borg-extract
+#         state: directory
+
+#     - name: Extract data from borg backup
+#       command: >
+#         borg extract root@194.163.154.164:/root/lago_backup_repo::backup-{{ ansible_date_time.date }}
+#       args:
+#         chdir: ~/borg-extract
+#       become: yes
+
+
 - name: Extract borg backup
   hosts: 149.102.140.77
+  vars:
+    ansible_ssh_private_key_file: /root/.ssh/id_rsa  # Path to your SSH private key
   tasks:
     - name: Ensure Borg is installed
       package:
@@ -73,13 +97,17 @@
 
     - name: Create extraction directory
       file:
-        path: ~/borg-extract
+        path: /home/{{ ansible_user }}/borg-extract
         state: directory
+        mode: '0755'
+      become: yes
 
     - name: Extract data from borg backup
       command: >
         borg extract root@194.163.154.164:/root/lago_backup_repo::backup-{{ ansible_date_time.date }}
       args:
-        chdir: ~/borg-extract
+        chdir: /home/{{ ansible_user }}/borg-extract
       become: yes
+      environment:
+        BORG_RSH: "ssh -i /root/.ssh/id_rsa"
 
