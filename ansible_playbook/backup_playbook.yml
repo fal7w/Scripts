@@ -55,7 +55,7 @@
       changed_when: false
 
     - name: Reinitialize borg repository if no manifest
-      command: borg init --encryption=repokey-blake2 /root/lago_backup_repo --recreate
+      command: borg init --encryption=repokey-blake2 /root/lago_backup_repo
       when: borg_list.rc != 0 and 'Repository has no manifest' in borg_list.stderr
 
 - name: Create borg backup
