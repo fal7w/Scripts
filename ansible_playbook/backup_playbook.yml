@@ -2,25 +2,25 @@
 - name: Automate Docker and Borg backup
   hosts: localhost
   vars:
-    ansible_python_interpreter: /usr/bin/python3  # Ensure the correct Python interpreter is used
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Execute pg_dump inside docker container lago
-      command: docker exec lago-db bash -c "pg_dump -U lago lago > /tmp/db_backup.sql"
+      command: /usr/bin/docker exec lago-db bash -c "pg_dump -U lago lago > /tmp/db_backup.sql"
 
     - name: Copy backup file from docker container to host
-      command: docker cp lago-db:/tmp/db_backup.sql /root/lago_backup/db_backup.sql
+      command: /usr/bin/docker cp lago-db:/tmp/db_backup.sql /root/lago_backup/db_backup.sql
 
     - name: Execute pg_dump inside docker container wiki
-      command: docker exec requarks-wiki-db-1 bash -c "pg_dump -U wikijs wiki > /tmp/wiki_backup.sql"
+      command: /usr/bin/docker exec requarks-wiki-db-1 bash -c "pg_dump -U wikijs wiki > /tmp/wiki_backup.sql"
 
     - name: Copy backup file from docker container to host
-      command: docker cp requarks-wiki-db-1:/tmp/wiki_backup.sql /root/lago_backup/wiki_backup.sql
+      command: /usr/bin/docker cp requarks-wiki-db-1:/tmp/wiki_backup.sql /root/lago_backup/wiki_backup.sql
 
     - name: Execute pg_dump inside docker container sonarqube
-      command: docker exec sonar-lint-db-1 bash -c "pg_dump -U sonar -d sonar > /tmp/sonarqube_backup.sql"
+      command: /usr/bin/docker exec sonar-lint-db-1 bash -c "pg_dump -U sonar -d sonar > /tmp/sonarqube_backup.sql"
 
     - name: Copy backup file from docker container to host
-      command: docker cp sonar-lint-db-1:/tmp/sonarqube_backup.sql /root/lago_backup/sonarqube_backup.sql
+      command: /usr/bin/docker cp sonar-lint-db-1:/tmp/sonarqube_backup.sql /root/lago_backup/sonarqube_backup.sql
 
 - name: Initialize borg repository
   hosts: 194.163.154.164
