@@ -25,12 +25,20 @@
 
 - name: Initialize borg repository
   hosts: 194.163.154.164
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Ensure Borg is installed
-      package:
+      apt:
         name: borgbackup
         state: present
-      become: yes
+        update_cache: yes
+
+    - name: Ensure backup directory exists on the remote host
+      file:
+        path: /root/lago_backup
+        state: directory
 
     - name: Check if borg repository exists
       stat:
@@ -40,7 +48,11 @@
     - name: Initialize borg repository with encryption
       command: borg init --encryption=repokey-blake2 /root/lago_backup_repo
       when: not repo_stat.stat.exists
-      become: yes
+
+    - name: Reinitialize borg repository if no manifest
+      command: borg init --encryption=repokey-blake2 /root/lago_backup_repo --recreate
+      when: borg_list.rc != 0 and 'Repository has no manifest' in borg_list.stderr
+
 
 - name: Create borg backup
   hosts: 194.163.154.164
