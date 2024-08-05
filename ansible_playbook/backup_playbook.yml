@@ -1,4 +1,4 @@
-# ---
+---
 # - name: Automate Docker and Borg backup
 #   hosts: 194.163.154.164
 #   tasks:
@@ -62,41 +62,41 @@
 #       when: "'backup-{{ ansible_date_time.date }}' not in borg_list.stdout"
 #       become: yes
 
-# - name: Extract borg backup
-#   hosts: 149.102.140.77
-#   tasks:
-#     - name: Ensure Borg is installed
-#       package:
-#         name: borgbackup
-#         state: present
-#       become: yes
-
-#     - name: Create extraction directory
-#       file:
-#         path: ~/borg-extract
-#         state: directory
-
-#     - name: Extract data from borg backup
-#       command: >
-#         borg extract root@194.163.154.164:/root/lago_backup_repo::backup-{{ ansible_date_time.date }}
-#       args:
-#         chdir: ~/borg-extract
-#       become: yes
-
----
-- name: Test SSH connectivity and create a test file
-  hosts: remote
+- name: Extract borg backup
+  hosts: 149.102.140.77
   tasks:
-    - name: Create a test file on the remote host
-      command: touch /root/test_file.txt
+    - name: Ensure Borg is installed
+      package:
+        name: borgbackup
+        state: present
+      become: yes
 
-    - name: Verify the test file was created
-      stat:
-        path: /root/test_file.txt
-      register: test_file
+    - name: Create extraction directory
+      file:
+        path: ~/borg-extract
+        state: directory
 
-    - name: Print test file creation status
-      debug:
-        msg: "Test file exists: {{ test_file.stat.exists }}"
+    - name: Extract data from borg backup
+      command: >
+        borg extract root@194.163.154.164:/root/lago_backup_repo::backup-{{ ansible_date_time.date }}
+      args:
+        chdir: ~/borg-extract
+      become: yes
+
+# ---
+# - name: Test SSH connectivity and create a test file
+#   hosts: remote
+#   tasks:
+#     - name: Create a test file on the remote host
+#       command: touch /root/test_file.txt
+
+#     - name: Verify the test file was created
+#       stat:
+#         path: /root/test_file.txt
+#       register: test_file
+
+#     - name: Print test file creation status
+#       debug:
+#         msg: "Test file exists: {{ test_file.stat.exists }}"
 
 
