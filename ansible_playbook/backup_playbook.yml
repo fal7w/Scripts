@@ -1,4 +1,4 @@
----
+# ---
 # - name: Automate Docker and Borg backup
 #   hosts: 194.163.154.164
 #   tasks:
@@ -83,31 +83,20 @@
 #         chdir: ~/borg-extract
 #       become: yes
 
-
-- name: Extract borg backup
-  hosts: 149.102.140.77
-  vars:
-    ansible_ssh_private_key_file: /root/.ssh/id_rsa  # Path to your SSH private key
+---
+- name: Test SSH connectivity and create a test file
+  hosts: remote
   tasks:
-    - name: Ensure Borg is installed
-      package:
-        name: borgbackup
-        state: present
-      become: yes
+    - name: Create a test file on the remote host
+      command: touch /root/test_file.txt
 
-    - name: Create extraction directory
-      file:
-        path: /home/{{ ansible_user }}/borg-extract
-        state: directory
-        mode: '0755'
-      become: yes
+    - name: Verify the test file was created
+      stat:
+        path: /root/test_file.txt
+      register: test_file
 
-    - name: Extract data from borg backup
-      command: >
-        borg extract root@194.163.154.164:/root/lago_backup_repo::backup-{{ ansible_date_time.date }}
-      args:
-        chdir: /home/{{ ansible_user }}/borg-extract
-      become: yes
-      environment:
-        BORG_RSH: "ssh -i /root/.ssh/id_rsa"
+    - name: Print test file creation status
+      debug:
+        msg: "Test file exists: {{ test_file.stat.exists }}"
+
 
