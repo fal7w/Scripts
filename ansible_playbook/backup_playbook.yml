@@ -67,6 +67,10 @@
       failed_when: false
       changed_when: false
     
+    - name: Debug borg_list stdout
+      debug:
+        msg: "{{ borg_list.stdout }}"
+    
     - name: Create backup using borg
       command: borg create --stats --progress /root/lago_backup_repo::backup-{{ ansible_date_time.date }} /root/lago_backup
       when: "'backup-' + ansible_date_time.date not in borg_list.stdout"
@@ -74,7 +78,6 @@
         BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK: "yes"
       become: yes
 
-      
 - name: Extract borg backup
   hosts: 149.102.140.77
   tasks:
