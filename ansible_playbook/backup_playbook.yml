@@ -59,15 +59,14 @@
 
     - name: Initialize borg repository if it doesn't exist
       command: borg init --encryption=none /root/lago_backup_repo
-      when: "'Repository /root/lago_backup_repo' not in borg_list.stdout and 'repository is already initialized' not in borg_list.stderr"
+      when: borg_list.rc != 0 and 'Repository /root/lago_backup_repo' not in borg_list.stderr
       become: yes
     
     - name: Create backup using borg
       command: borg create --stats --progress /root/lago_backup_repo::backup-{{ ansible_date_time.date }} /root/lago_backup
       when: "'backup-{{ ansible_date_time.date }}' not in borg_list.stdout"
       become: yes
-
-
+      
 - name: Extract borg backup
   hosts: 149.102.140.77
   tasks:
