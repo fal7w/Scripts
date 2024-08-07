@@ -2,6 +2,12 @@
 - name: Automate Docker and Borg backup
   hosts: localhost
   tasks:
+    - name: Ensure the sonarqube_backup directory exists
+      file:
+        path: /root/wiki_backup
+        state: directory
+        mode: '0755'
+        
     - name: Execute pg_dump inside docker container wiki
       command: docker exec requarks-wiki-db-1 bash -c "pg_dump -U wikijs wiki > /tmp/wiki_backup.sql"
 
