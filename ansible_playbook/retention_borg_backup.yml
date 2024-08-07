@@ -1,0 +1,15 @@
+---
+- name: Prune old backups in various repositories
+  hosts: localhost
+  tasks:
+    - name: Prune SonarQube backups
+      command: borg prune -v --list /root/sonarqube_backup_repo --keep-weekly=4
+
+    - name: Prune Wiki.js backups
+      command: borg prune -v --list /root/wiki_backup_repo --keep-weekly=4
+
+    - name: Prune Lago backups
+      command: borg prune -v --list /root/lago_backup_repo --keep-weekly=4
+
+    - name: Prune Nginx Proxy Manager backups
+      command: borg prune -v --list /root/nginxproxy_backup_repo --keep-weekly=4
