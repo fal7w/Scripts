@@ -2,7 +2,7 @@
 - name: Automate Docker and Borg backup
   hosts: localhost
   tasks:
-    - name: Ensure the sonarqube_backup directory exists
+    - name: Ensure the wiki_backup directory exists
       file:
         path: /root/wiki_backup
         state: directory
