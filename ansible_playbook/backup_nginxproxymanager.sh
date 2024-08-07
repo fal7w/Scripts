@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-BACKUP_PATH="/root/lago_backup/nginxproxymanager"
+BACKUP_PATH="/root/nginxproxy_backup/nginxproxymanager"
 DATE=$(date +"%Y%m%d_%H%M%S")
 
 # Create backup directory if it doesn't exist
