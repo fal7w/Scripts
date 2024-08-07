@@ -1,0 +1,70 @@
+name: Pull_Request_Email
+
+on:
+  pull_request:
+    type:
+      - opened
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+ 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+  
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: mail.fintechsys.net
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: 'New pull_request Opened'
+          body: |
+            Hello! A new pull_request has been opened in the repository.
+            pull request Title: ${{ github.event.pull_request.title }}
+            pull request URL: ${{ github.event.pull_request.html_url }}
+          html_body: |
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <style>
+            table {
+              font-family: arial, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+            
+            td, th {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+            }
+            
+            tr:nth-child(even) {
+              background-color: #dddddd;
+            }
+            </style>
+            </head>
+            <body>
+            
+            <h2>${{ github.workflow }} - Successful</h2>
+            
+            <table>
+              <tr>
+                <td "font-weight: bold; position: absolute; left: 30px;">pull request Title </td>
+                <td>${{ github.event.pull_request.title }}</td>
+              </tr>
+              <tr>
+                <td>pull request URL</td>
+                <td><a id="pullURL" href=" " target="_blank"> ${{ github.event.pull_request.html_url }} </a></td>
+              </tr>
+            </table>
+            
+            </body>
+            </html>
+
+          to: ${{ secrets.USERS_EMAILS }}
+          from: github-actions@gmail.com

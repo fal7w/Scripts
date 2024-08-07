@@ -1,0 +1,93 @@
+---
+- name: Automate Docker and Borg backup
+  hosts: localhost
+  tasks:
+    - name: Ensure the wiki_backup directory exists
+      file:
+        path: /root/wiki_backup
+        state: directory
+        mode: '0755'
+        
+    - name: Execute pg_dump inside docker container wiki
+      command: docker exec requarks-wiki-db-1 bash -c "pg_dump -U wikijs wiki > /tmp/wiki_backup.sql"
+
+    - name: Copy backup file from docker container to host
+      command: docker cp requarks-wiki-db-1:/tmp/wiki_backup.sql /root/wiki_backup/wiki_backup.sql
+
+- name: Initialize borg repository
+  hosts: 194.163.154.164
+  tasks:
+    - name: Ensure Borg is installed
+      package:
+        name: borgbackup
+        state: present
+      become: yes
+
+    - name: Check if borg repository exists
+      stat:
+        path: /root/wiki_backup_repo
+      register: repo_stat
+
+    - name: Initialize borg repository with encryption
+      command: borg init --encryption=repokey-blake2 /root/wiki_backup_repo
+      when: not repo_stat.stat.exists
+      become: yes
+
+- name: Create borg backup
+  hosts: 194.163.154.164
+  tasks:
+    - name: Ensure Borg is installed
+      package:
+        name: borgbackup
+        state: present
+      become: yes
+
+    - name: Check if borg repository directory exists
+      stat:
+        path: /root/wiki_backup_repo
+      register: repo_stat
+    
+    - name: Initialize borg repository if it doesn't exist
+      command: borg init --encryption=none /root/wiki_backup_repo
+      when: not repo_stat.stat.exists
+      become: yes
+    
+    - name: Check if borg archive exists
+      command: borg list /root/wiki_backup_repo
+      register: borg_list
+      failed_when: false
+      changed_when: false
+    
+    - name: Debug borg_list stdout
+      debug:
+        msg: "{{ borg_list.stdout }}"
+    
+    - name: Create backup using borg
+      command: borg create --stats --progress /root/wiki_backup_repo::backup-{{ ansible_date_time.date }} /root/wiki_backup
+      when: "'backup-' + ansible_date_time.date not in borg_list.stdout"
+      environment:
+        BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK: "yes"
+      become: yes
+
+
+- name: Extract borg backup
+  hosts: 149.102.140.77
+  tasks:
+    - name: Ensure Borg is installed
+      package:
+        name: borgbackup
+        state: present
+      become: yes
+
+    - name: Create extraction directory
+      file:
+        path: ~/borg-extract
+        state: directory
+
+    - name: Extract data from borg backup
+      command: >
+        borg extract root@194.163.154.164:/root/wiki_backup_repo::backup-{{ ansible_date_time.date }}
+      args:
+        chdir: ~/borg-extract
+      become: yes
+      

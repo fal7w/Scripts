@@ -1,0 +1,26 @@
+name: Reusable workflow 
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+
+jobs:
+  rul_job:
+    runs-on: ubuntu-latest
+
+    
+    steps:
+      # - name: Checkout repository
+      #   uses: actions/checkout@v2
+
+      - name: Generate Random Port
+        id: random_port
+        run: |
+           ports=$((8081 + RANDOM % 919))
+            echo $ports
+   
+
+
+      
+

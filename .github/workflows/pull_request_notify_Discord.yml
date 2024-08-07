@@ -1,0 +1,20 @@
+name: Pull Request Notification
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  send_notification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Discord notification
+        uses: sebastianpopp/discord-action@releases/v2
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: |
+            Hello! A new pull request has been opened in the repository.
+             pull_request Title: ${{ github.event. pull_request.title }}
+              pull_request URL: ${{ github.event. pull_request.html_url }}

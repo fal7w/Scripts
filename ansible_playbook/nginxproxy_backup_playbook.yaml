@@ -1,0 +1,105 @@
+---
+- name: Backup Nginx Proxy Manager Data and Letsencrypt Directories
+  hosts: localhost
+  become: true
+  vars:
+    backup_path: "/root/nginxproxy_backup/nginxproxymanager"
+    date: "{{ lookup('pipe', 'date +%Y%m%d_%H%M%S') }}"
+
+  tasks:
+    - name: Create backup directory if it doesn't exist
+      file:
+        path: "{{ backup_path }}"
+        state: directory
+        mode: '0755'
+
+    - name: Backup data directory
+      ansible.builtin.command:
+        cmd: tar -czvf {{ backup_path }}/data_backup_{{ date }}.tar.gz -C ~/devops/stage-ops/nginxproxymanager/data .
+      args:
+        creates: "{{ backup_path }}/data_backup_{{ date }}.tar.gz"
+
+    - name: Backup letsencrypt directory
+      ansible.builtin.command:
+        cmd: tar -czvf {{ backup_path }}/letsencrypt_backup_{{ date }}.tar.gz -C ~/devops/stage-ops/nginxproxymanager/letsencrypt .
+      args:
+        creates: "{{ backup_path }}/letsencrypt_backup_{{ date }}.tar.gz"
+
+
+- name: Initialize borg repository
+  hosts: 194.163.154.164
+  tasks:
+    - name: Ensure Borg is installed
+      package:
+        name: borgbackup
+        state: present
+      become: yes
+
+    - name: Check if borg repository exists
+      stat:
+        path: /root/nginxproxy_backup_repo
+      register: repo_stat
+
+    - name: Initialize borg repository with encryption
+      command: borg init --encryption=repokey-blake2 /root/nginxproxy_backup_repo
+      when: not repo_stat.stat.exists
+      become: yes
+
+- name: Create borg backup
+  hosts: 194.163.154.164
+  tasks:
+    - name: Ensure Borg is installed
+      package:
+        name: borgbackup
+        state: present
+      become: yes
+
+    - name: Check if borg repository directory exists
+      stat:
+        path: /root/nginxproxy_backup_repo
+      register: repo_stat
+    
+    - name: Initialize borg repository if it doesn't exist
+      command: borg init --encryption=none /root/nginxproxy_backup_repo
+      when: not repo_stat.stat.exists
+      become: yes
+    
+    - name: Check if borg archive exists
+      command: borg list /root/nginxproxy_backup_repo
+      register: borg_list
+      failed_when: false
+      changed_when: false
+    
+    - name: Debug borg_list stdout
+      debug:
+        msg: "{{ borg_list.stdout }}"
+    
+    - name: Create backup using borg
+      command: borg create --stats --progress /root/nginxproxy_backup_repo::backup-{{ ansible_date_time.date }} /root/nginxproxy_backup/nginxproxymanager
+      when: "'backup-' + ansible_date_time.date not in borg_list.stdout"
+      environment:
+        BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK: "yes"
+      become: yes
+
+
+- name: Extract borg backup
+  hosts: 149.102.140.77
+  tasks:
+    - name: Ensure Borg is installed
+      package:
+        name: borgbackup
+        state: present
+      become: yes
+
+    - name: Create extraction directory
+      file:
+        path: ~/borg-extract
+        state: directory
+
+    - name: Extract data from borg backup
+      command: >
+        borg extract root@194.163.154.164:/root/nginxproxy_backup_repo::backup-{{ ansible_date_time.date }}
+      args:
+        chdir: ~/borg-extract
+      become: yes
+      

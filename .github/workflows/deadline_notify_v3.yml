@@ -1,0 +1,28 @@
+name: Deadline_Notify_v3
+
+on:
+  schedule:
+    - cron: '0/1 0 * * *'  # Run every day at 9:00 UTC
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install python-dateutil
+
+      - name: Run deadline notify script
+        run: python deadline_notify.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.fal7w }}
+          GITHUB_REPOSITORY_NAME: ${{ github.Scripts }}
